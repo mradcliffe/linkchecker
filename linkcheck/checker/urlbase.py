@@ -102,6 +102,7 @@ class UrlBase:
         "text/plain+chromium": "chromium",
         "application/x-plist+safari": "safari",
         "text/vnd.wap.wml": "wml",
+        "application/xml": "sitemap",
         "application/xml+sitemap": "sitemap",
         "application/xml+sitemapindex": "sitemapindex",
         "application/pdf": "pdf",
