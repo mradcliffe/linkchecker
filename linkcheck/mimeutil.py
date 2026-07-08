@@ -92,7 +92,7 @@ def guess_mimetype_read(read):
     """Try to read some content and do a poor man's file(1)."""
     mime = None
     try:
-        data = read()[:70]
+        data = read()[:255]
     except Exception:
         pass
     else:
