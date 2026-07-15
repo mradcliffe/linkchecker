@@ -156,3 +156,13 @@ class TestLinkparser(TestBase):
         url = "http://example.com/bla/a=b"
         content = '<a href="%s&quot;">'
         self._test_one_link(content % url, url + '"')
+
+    def test_nofollow_rel_parsing(self):
+        content = '<a rel="%s" href="%s">'
+        url = 'http://example.com'
+        rel = 'canonical'
+        self._test_one_link(content % (rel, url), url)
+        rel = 'nofollow'
+        self._test_no_link(content % (rel, url))
+        rel = 'noreferer nofollow'
+        self._test_no_link(content % (rel, url))

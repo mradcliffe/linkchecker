@@ -110,6 +110,12 @@ def is_meta_url(attr, attrs):
         res = rel in ('shortcut icon', 'icon')
     return res
 
+def has_rel_nofollow(attrs):
+    """Check if the element has a rel attribute containing nofollow."""
+    res = False
+    if 'nofollow' in attrs.get('rel', '').lower():
+        res = True
+    return res
 
 def is_form_get(attr, attrs):
     """Check if this is a GET form action URL."""
@@ -147,7 +153,9 @@ class LinkFinder:
         for attr in sorted(tagattrs.intersection(attrs)):
             if tag == "meta" and not is_meta_url(attr, attrs):
                 continue
-            if tag == "form" and not is_form_get(attr, attrs):
+            if tag == "form" and (not is_form_get(attr, attrs) or has_rel_nofollow(attrs)):
+                continue
+            if (tag == 'a' or tag == 'area') and has_rel_nofollow(attrs):
                 continue
             # name of this link
             name = self.get_link_name(tag, attrs, attr, element_text)
